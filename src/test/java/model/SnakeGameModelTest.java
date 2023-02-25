@@ -5,18 +5,30 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import gameUtils.DirectionEnum;
-import model.utils.Position;
 
 public class SnakeGameModelTest {
+    int rowNum = 4;
+    int colNum = 4;
+    SnakeGameModel model = null;
+    int[][] initSnakePos = { { 2, 2 }, { 1, 2 } };
+    int initLength = 2;
+
+    @BeforeEach
+    public void setup() {
+        model = new SnakeGameModel(rowNum, colNum, new Random(0));
+    }
+
     @Test
     public void testSnakeGameModelInitException() {
         IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> new SnakeGameModel(3, 4),
+                () -> new SnakeGameModel(3, 4, new Random()),
                 "Expected the model to complain about the board size input, but it didn't");
 
         assertTrue(thrown.getMessage().contentEquals("Illegal Board Size!"));
@@ -24,47 +36,26 @@ public class SnakeGameModelTest {
 
     @Test
     public void testSnakeGameModelInit() {
-        int rowNum = 4;
-        int colNum = 4;
+        assertEquals(rowNum, model.getRowNum());
+        assertEquals(colNum, model.getColNum());
 
-        SnakeGameModel model = new SnakeGameModel(rowNum, colNum);
-        assertEquals(model.getRowNum(), rowNum);
-        assertEquals(model.getColNum(), colNum);
-
-        // This test
         Position applePos = model.getApplePos();
         assertTrue((applePos.getXPos() >= 0) && (applePos.getXPos() < colNum));
         assertTrue((applePos.getYPos() >= 0) && (applePos.getYPos() < rowNum));
 
-        Snake snake = model.getSnake();
-        LinkedList<Position> positions = snake.getBodyPartPos();
+        LinkedList<Position> positions = model.getSnakePosition();
 
-        int[][] targetPos = { { 2, 2 }, { 1, 2 } };
-
-        for (int i = 0; i < targetPos.length; i++) {
-            assertEquals(positions.get(i).getXPos(), targetPos[i][0]);
-            assertEquals(positions.get(i).getYPos(), targetPos[i][1]);
+        for (int i = 0; i < initSnakePos.length; i++) {
+            assertEquals(initSnakePos[i][0], positions.get(i).getXPos());
+            assertEquals(initSnakePos[i][1], positions.get(i).getYPos());
         }
-
-        char[][] gameMap = model.getMap();
-        int appleNum = countMap(gameMap, 'A');
-        int snkBodyNum = countMap(gameMap, 'S');
-        assertEquals(appleNum, 1);
-        assertEquals(snkBodyNum, 2);
     }
 
     @Test
     public void testSnakeMove() {
-        int rowNum = 4;
-        int colNum = 4;
-
-        SnakeGameModel model = new SnakeGameModel(rowNum, colNum);
-        model.setApple(0, 0);
-        model.updateMap();
-
-        Snake snake = model.getSnake();
-        int initLength = snake.getCurLength();
-        assertEquals(initLength, 2);
+        LinkedList<Position> positions = model.getSnakePosition();
+        int curLength = positions.size();
+        assertEquals(initLength, curLength);
 
         // Snake moves right.
         model.moveSnake();
@@ -87,39 +78,28 @@ public class SnakeGameModelTest {
         model.setSnakeDirection(DirectionEnum.UP);
         model.moveSnake();
 
-        snake = model.getSnake();
-        int curLength = snake.getCurLength();
+        positions = model.getSnakePosition();
+        curLength = positions.size();
+
         // The snake length does not change as it does not eat anything.
-        assertEquals(curLength, initLength);
+        assertEquals(initLength, curLength);
 
         int[][] targetPos = { { 2, 1 }, { 2, 0 } };
-        LinkedList<Position> positions = snake.getBodyPartPos();
 
         for (int i = 0; i < targetPos.length; i++) {
             assertEquals(positions.get(i).getXPos(), targetPos[i][0]);
             assertEquals(positions.get(i).getYPos(), targetPos[i][1]);
         }
-
-        char[][] gameMap = model.getMap();
-        int appleNum = countMap(gameMap, 'A');
-        int snkBodyNum = countMap(gameMap, 'S');
-        assertEquals(appleNum, 1);
-        assertEquals(snkBodyNum, 2);
     }
 
     @Test
     public void testSnakeGrow() {
-        int rowNum = 4;
-        int colNum = 4;
+        LinkedList<Position> positions = model.getSnakePosition();
+        int curLength = positions.size();
+        assertEquals(initLength, curLength);
 
-        SnakeGameModel model = new SnakeGameModel(rowNum, colNum);
-        model.setApple(1, 0);
-        Position initApplePos = new Position(1, 0);
-        model.updateMap();
-
-        Snake snake = model.getSnake();
-        int initLength = snake.getCurLength();
-        assertEquals(initLength, 2);
+        // Snake moves right.
+        model.moveSnake();
 
         // Snake moves down.
         model.setSnakeDirection(DirectionEnum.DOWN);
@@ -132,41 +112,91 @@ public class SnakeGameModelTest {
         model.setSnakeDirection(DirectionEnum.LEFT);
         model.moveSnake();
 
-        snake = model.getSnake();
-        int curLength = snake.getCurLength();
-        // The snake grows as it ate an apple.
-        assertEquals(curLength, initLength + 1);
+        // Snake moves up.
+        model.setSnakeDirection(DirectionEnum.UP);
+        model.moveSnake();
 
-        int[][] targetPos = { { 1, 0 }, { 2, 0 }, { 2, 1 } };
-        LinkedList<Position> positions = snake.getBodyPartPos();
+        // Snake moves up again.
+        model.moveSnake();
+
+        // And again, snake moves up.
+        model.moveSnake();
+
+        positions = model.getSnakePosition();
+        curLength = positions.size();
+        assertEquals(initLength + 1, curLength);
+
+        int[][] targetPos = { { 2, 3 }, { 2, 2 }, { 2, 1 } };
 
         for (int i = 0; i < targetPos.length; i++) {
             assertEquals(positions.get(i).getXPos(), targetPos[i][0]);
             assertEquals(positions.get(i).getYPos(), targetPos[i][1]);
         }
 
-        Position applePos = model.getApplePos();
-        assertTrue(!applePos.equals(initApplePos));
-
-        assertTrue((applePos.getXPos() >= 0) && (applePos.getXPos() < colNum));
-        assertTrue((applePos.getYPos() >= 0) && (applePos.getYPos() < rowNum));
-
-        char[][] gameMap = model.getMap();
-        int appleNum = countMap(gameMap, 'A');
-        int snkBodyNum = countMap(gameMap, 'S');
-        assertEquals(appleNum, 1);
-        assertEquals(snkBodyNum, 3);
     }
 
     @Test
-    public void testSnakeCrashWall() {
-        int rowNum = 4;
-        int colNum = 4;
+    public void testSnakeCrashTopWall() {
+        // Snake moves right.
+        model.moveSnake();
 
-        SnakeGameModel model = new SnakeGameModel(rowNum, colNum);
-        model.setApple(0, 0);
-        model.updateMap();
+        // Snake moves up.
+        model.setSnakeDirection(DirectionEnum.UP);
+        model.moveSnake();
 
+        // Snake moves up again and crash on the wall.
+        model.moveSnake();
+
+        assertTrue(model.isGameOver());
+    }
+
+    @Test
+    public void testSnakeCrashBottomWall() {
+        // Snake moves right.
+        model.moveSnake();
+
+        // Snake moves down.
+        model.setSnakeDirection(DirectionEnum.DOWN);
+        model.moveSnake();
+
+        // Snake moves down.
+        model.moveSnake();
+
+        // Snake moves down again and crash on the wall.
+        model.moveSnake();
+
+        assertTrue(model.isGameOver());
+    }
+
+    @Test
+    public void testSnakeCrashLeftWall() {
+        // Snake moves right.
+        model.moveSnake();
+
+        // Snake moves right.
+        model.moveSnake();
+
+        // Snake moves down.
+        model.moveSnake();
+
+        // Snake moves left.
+        model.setSnakeDirection(DirectionEnum.LEFT);
+        model.moveSnake();
+
+        // Snake moves left again.
+        model.moveSnake();
+
+        // And again, snake moves left.
+        model.moveSnake();
+
+        // Snake moves left again and crash on the wall.
+        model.moveSnake();
+
+        assertTrue(model.isGameOver());
+    }
+
+    @Test
+    public void testSnakeCrashRightWall() {
         // Snake moves right.
         model.moveSnake();
 
@@ -178,51 +208,43 @@ public class SnakeGameModelTest {
 
     @Test
     public void testSnakeCrashBody() {
-        int rowNum = 4;
-        int colNum = 4;
-
-        SnakeGameModel model = new SnakeGameModel(rowNum, colNum);
-        // The test sets an apple to the right of snake head.
-        model.setApple(3, 2);
-        model.updateMap();
-
-        // Snake moves right and eat the apple.
-        model.moveSnake();
-
-        // The test sets an apple below snake head.
-        model.setApple(3, 1);
-        model.updateMap();
-
-        // Snake moves down and eat the apple.
-        model.setSnakeDirection(DirectionEnum.DOWN);
-        model.moveSnake();
-
-        // The test sets an apple to the left of snake head.
-        model.setApple(2, 1);
-        model.updateMap();
-
-        // Snake moves left and eat the apple.
-        model.setSnakeDirection(DirectionEnum.LEFT);
-        model.moveSnake();
-
-        // Snake moves up and crash on its body.
+        // Snake moves up.
         model.setSnakeDirection(DirectionEnum.UP);
         model.moveSnake();
 
+        // Snake moves left.
+        model.setSnakeDirection(DirectionEnum.LEFT);
+        model.moveSnake();
+
+        // Snake moves left again.
+        model.moveSnake();
+
+        // Snake moves down.
+        model.setSnakeDirection(DirectionEnum.DOWN);
+        model.moveSnake();
+
+        // Snake moves down again.
+        model.moveSnake();
+
+        // Snake moves right.
+        model.setSnakeDirection(DirectionEnum.RIGHT);
+        model.moveSnake();
+
+        // Snake moves right again
+        model.moveSnake();
+
+        // Snake moves up.
+        model.setSnakeDirection(DirectionEnum.UP);
+        model.moveSnake();
+
+        // Snake moves left.
+        model.setSnakeDirection(DirectionEnum.LEFT);
+        model.moveSnake();
+
+        // Snake moves down and crash on its body.
+        model.setSnakeDirection(DirectionEnum.DOWN);
+        model.moveSnake();
+
         assertTrue(model.isGameOver());
-    }
-
-    private int countMap(char[][] gameMap, char content) {
-        int count = 0;
-
-        for (int i = 3; i >= 0; i--) {
-            for (int j = 0; j < 4; j++) {
-                if (gameMap[i][j] == content) {
-                    count++;
-                }
-            }
-        }
-
-        return count;
     }
 }

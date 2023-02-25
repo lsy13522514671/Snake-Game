@@ -7,8 +7,7 @@ import view.ISnakeGameView;
 import view.SnakeGameView;
 
 import java.awt.Window;
-
-import controller.utils.SnakeGameTimer;
+import java.util.Random;
 
 public class SnakeGameController implements ISnakeGameController{
     private ISnakeGameModel model;
@@ -16,9 +15,9 @@ public class SnakeGameController implements ISnakeGameController{
     private SnakeGameTimer gameTimer;
 
     public SnakeGameController() {
-        model = new SnakeGameModel(10, 10);
+        model = new SnakeGameModel(4, 4, new Random(0));
         view = new SnakeGameView(model, this);
-        ((Window) view).setVisible(true);
+        // ((Window) view).setVisible(true);
         model.attach(this);
         model.attach(view);
         gameTimer = generateTimer(model, view);

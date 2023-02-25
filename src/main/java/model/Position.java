@@ -10,11 +10,11 @@ public class Position {
     }
 
 
-    public int getXPos(){
+    int getXPos(){
         return xPos;
     }
 
-    public int getYPos(){
+    int getYPos(){
         return yPos;
     }
 

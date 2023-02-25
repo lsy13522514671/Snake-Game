@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import org.junit.jupiter.api.Test;
 
 import gameUtils.DirectionEnum;
-import model.utils.Position;
 
 public class SnakeTest {
     @Test
@@ -78,7 +77,7 @@ public class SnakeTest {
         //moving up again
         snake.move();
         //eating an apple
-        snake.grow();
+        snake.grow(new Position(4, 1));
 
         int[][] targetPos = { { 4, 3 }, { 4, 2 }, { 4, 1 } };
         // This test makes sure the snake grows by only one body part.

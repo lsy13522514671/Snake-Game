@@ -9,42 +9,35 @@ import gameUtils.DirectionEnum;
 import gameUtils.IGameObserver;
 
 public class SnakeGameModel implements ISnakeGameModel {
-    int rowNum;
-    int colNum;
-    char[][] map;
-    Snake snake;
-    Position apple;
-    ArrayList<IGameObserver> observers;
-    Random seed = new Random();
+    private int rowNum;
+    private int colNum;
+    private Snake snake;
+    private LinkedList<Position> lastSnakePos = new LinkedList<>();
+    private Position apple;
+    private ArrayList<IGameObserver> observers;
+    private Random seed;
 
-    public SnakeGameModel(int rowNum, int colNum) throws IllegalArgumentException {
+    public SnakeGameModel(int rowNum, int colNum, Random seed) throws IllegalArgumentException {
         if ((rowNum < 4) || (colNum < 4)) {
             throw new IllegalArgumentException("Illegal Board Size!");
         }
 
         this.rowNum = rowNum;
         this.colNum = colNum;
-        this.map = new char[rowNum][colNum];
         this.snake = new Snake(new Position(colNum / 2, rowNum / 2));
+        this.seed = seed;
         generateApple();
-        updateMap();
         this.observers = new ArrayList<>();
     }
 
-    void updateMap() {
-        for (int i = 0; i < rowNum; i++) {
-            Arrays.fill(map[i], 'O');
+    private void recordLastSnakePos() {
+        lastSnakePos.clear();
+        LinkedList<Position> snakePos = snake.getBodyPartPos();
+        for(Position pos: snakePos) {
+            lastSnakePos.add(pos);
         }
-
-        LinkedList<Position> snakeBodyPos = snake.getBodyPartPos();
-        for (Position position : snakeBodyPos) {
-            map[position.getYPos()][position.getXPos()] = 'S';
-        }
-
-        // System.out.println("apple pos:" + "x-"+apple.getXPos()+",
-        // y-"+apple.getYPos());
-        map[apple.getYPos()][apple.getXPos()] = 'A';
     }
+
 
     private boolean isValidApplePos(Position applePos) {
         LinkedList<Position> snakeBodyPos = snake.getBodyPartPos();
@@ -54,18 +47,20 @@ public class SnakeGameModel implements ISnakeGameModel {
     }
 
     private void generateApple() {
-        int appleX = Utils.generateRandomInt(seed, 0, colNum - 1);
-        int appleY = Utils.generateRandomInt(seed, 0, rowNum - 1);
+        int appleX = ModelUtils.generateRandomInt(seed, 0, colNum - 1);
+        int appleY = ModelUtils.generateRandomInt(seed, 0, rowNum - 1);
         Position applePos = new Position(appleX, appleY);
 
         while (!isValidApplePos(applePos)) {
-            appleX = Utils.generateRandomInt(seed, 0, colNum - 1);
-            appleY = Utils.generateRandomInt(seed, 0, rowNum - 1);
+            appleX = ModelUtils.generateRandomInt(seed, 0, colNum - 1);
+            appleY = ModelUtils.generateRandomInt(seed, 0, rowNum - 1);
             applePos = new Position(appleX, appleY);
         }
 
         apple = applePos;
     }
+
+
 
     private boolean isEatingApple() {
         Position head = snake.getHeadPos();
@@ -110,6 +105,7 @@ public class SnakeGameModel implements ISnakeGameModel {
 
     @Override
     public void moveSnake() {
+        recordLastSnakePos();
         snake.move();
 
         if (isGameOver()) {
@@ -118,11 +114,9 @@ public class SnakeGameModel implements ISnakeGameModel {
         }
 
         if (isEatingApple()) {
-            snake.grow();
+            snake.grow(lastSnakePos.peekLast());
             generateApple();
         }
-
-        updateMap();
     }
 
     @Override
@@ -151,6 +145,24 @@ public class SnakeGameModel implements ISnakeGameModel {
 
     @Override
     public void printMap() {
+        char[][] map = new char[rowNum][colNum];
+
+        for (int i = 0; i < rowNum; i++) {
+            Arrays.fill(map[i], 'O');
+        }
+
+        map[apple.getYPos()][apple.getXPos()] = 'A';
+        
+        LinkedList<Position> snakePos = snake.getBodyPartPos();
+
+        if(isGameOver()) {
+            snakePos = lastSnakePos;
+        }
+
+        for(Position pos: snakePos) {
+            map[pos.getYPos()][pos.getXPos()] = 'S';
+        }
+
         for (int i = rowNum - 1; i >= 0; i--) {
             for (int j = 0; j < colNum; j++) {
                 System.out.print(map[i][j]);
@@ -188,15 +200,11 @@ public class SnakeGameModel implements ISnakeGameModel {
         return colNum;
     }
 
-    public char[][] getMap() {
-        return map;
+    public LinkedList<Position> getSnakePosition() {
+        return snake.getBodyPartPos();
     }
 
-    public Snake getSnake() {
-        return snake;
-    }
-
-    Position getApplePos() {
+    public Position getApplePos() {
         return apple;
     }
 
@@ -208,49 +216,11 @@ public class SnakeGameModel implements ISnakeGameModel {
         this.colNum = colNum;
     }
 
-    void setApple(int xPos, int yPos) {
-        apple = new Position(xPos, yPos);
-    }
-
     public static void main(String[] args) {
         int rowNum = 4;
         int colNum = 4;
 
-        SnakeGameModel model = new SnakeGameModel(rowNum, colNum);
-        // We set an apple to the right of snake head.
-        model.setApple(3, 2);
-        model.updateMap();
-        // Snake moves right and eat the apple.
-        model.moveSnake();
+        SnakeGameModel model = new SnakeGameModel(rowNum, colNum, new Random(0));
 
-        // We set an apple below snake head.
-        model.setApple(3, 1);
-        model.updateMap();
-
-        // Snake moves down.
-        model.setSnakeDirection(DirectionEnum.DOWN);
-        // Snake moves down and eat the apple.
-        model.moveSnake();
-
-        // We set the apple to the left down corner so that it does not dirturb the
-        // testing.
-        model.setApple(0, 0);
-        model.updateMap();
-
-        // Snake moves left.
-        model.setSnakeDirection(DirectionEnum.LEFT);
-        // Snake moves left.
-        model.moveSnake();
-
-        model.setSnakeDirection(DirectionEnum.UP);
-        // Snake moves up and crash on its body.
-        model.moveSnake();
-
-        Snake snake = model.getSnake();
-        LinkedList<Position> positions = snake.getBodyPartPos();
-
-        for (Position position : positions) {
-            System.out.println("body x: " + position.getXPos() + ", y: " + position.getYPos());
-        }
     }
 }

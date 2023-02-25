@@ -16,7 +16,7 @@ class Snake {
     // each snake body part position represented in a Cartisian coordinate
     private LinkedList<Position> bodyPartPos;
     private Position headPos; // a pointer to the snake head
-    private Position lastTailPos = null;
+    // private Position lastTailPos = null;
 
     Snake(Position position) {
         // the initial direction towards right
@@ -51,18 +51,16 @@ class Snake {
                 bodyPartPos.addFirst(new Position(headPos.getXPos() + 1, headPos.getYPos()));
                 break;
         }
-        setHeadPos(bodyPartPos.peek());
-        Position tailPos = bodyPartPos.peekLast();
-        setLastTailPos(tailPos.getXPos(), tailPos.getYPos());
+        this.headPos = bodyPartPos.peek();
         bodyPartPos.removeLast();
     }
 
     /**
      * This method is used by the model to make a snake grow. While a snake eats an
-     * apple, it grows from its tail by one body part.
+     * apple, it grows one additional body part position at the specified location.
      */
-    void grow() {
-        bodyPartPos.add(new Position(lastTailPos.getXPos(), lastTailPos.getYPos()));
+    void grow(Position pos) {
+        bodyPartPos.add(new Position(pos.getXPos(), pos.getYPos()));
     }
 
     /**
@@ -93,15 +91,6 @@ class Snake {
     }
 
     /**
-     * This method gets the snake tail in the last round.
-     * 
-     * @return tail in the last round
-     */
-    Position getLastTailPosition() {
-        return lastTailPos;
-    }
-
-    /**
      * This method gets the current snake length.
      * 
      * @return current length
@@ -116,36 +105,4 @@ class Snake {
     void setDirection(DirectionEnum direction) {
         this.direction = direction;
     }
-
-    /**
-     * This method sets the head position.
-     */
-    void setHeadPos(Position headPos) {
-        this.headPos = headPos;
-    }
-
-    /**
-     * This method sets the snake tail in the last round.
-     * 
-     */
-    void setLastTailPos(int xPos, int yPos) {
-        lastTailPos = new Position(xPos, yPos);
-    }
-
-    // public static void main(String[] args) {
-    // Snake snake = new Snake(new Position(2, 1));
-
-    // snake.move(false);
-    // snake.move(false);
-    // snake.setDirection(DirectionEnum.UP);
-    // snake.move(false);
-    // snake.setDirection(DirectionEnum.LEFT);
-    // snake.move(false);
-    // snake.setDirection(DirectionEnum.DOWN);
-    // snake.move(false);
-    // for(int i=0; i<snake.getBodyPartPos().size(); i++) {
-    // Position curPos = snake.getBodyPartPos().get(i);
-    // System.out.println("x: " + curPos.getXPos() + ", y:" + curPos.getYPos());
-    // }
-    // }
 }
