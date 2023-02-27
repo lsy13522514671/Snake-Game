@@ -7,7 +7,7 @@ public interface IGameController extends IGameObserver {
 
     public void setSnakeDirection(DirectionEnum direction);
 
-    public void start();
+    public void start(int frequency);
 
     public void pause();
 

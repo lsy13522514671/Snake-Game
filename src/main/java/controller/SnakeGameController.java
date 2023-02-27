@@ -1,31 +1,50 @@
 package controller;
 
 import gameUtils.DirectionEnum;
+import gameUtils.IGameTimer;
 import model.IGameModel;
 import model.MockSnakeGameModel;
-import model.SnakeGameModel;
 import view.IGameView;
 import view.SnakeGameView;
 
 import java.awt.Window;
 import java.util.Random;
+import java.util.TimerTask;
 
 public class SnakeGameController implements IGameController{
     private IGameModel model;
     private IGameView view;
-    private SnakeGameTimer gameTimer;
+    private IGameTimer gameTimer;
+    private TimerTask task;
+    private int frequency;
 
-    public SnakeGameController(IGameModel model) {
+    public SnakeGameController(IGameModel model, IGameTimer gameTimer) {
         this.model = model;
         this.view = new SnakeGameView(model, this);
         // ((Window) view).setVisible(true);
         this.model.attach(this);
-        this.model.attach(view);
-        this.gameTimer = generateTimer(model, view);
+        this.model.attach(this.view);
+        this.task = new TimerTask() {
+            @Override
+            public void run() {
+                model.moveSnake();
+                // view.paint();
+                System.out.println("display round: ");
+                model.printMap();
+                System.out.println("\n");
+            }
+        };
+        this.gameTimer = gameTimer;
     }
 
-    private SnakeGameTimer generateTimer(IGameModel model, IGameView view) {
-        return new SnakeGameTimer(model, view);
+    public SnakeGameController(IGameModel model, SnakeGameTimer gameTimer, int frequency) {
+        this.model = model;
+        this.view = new SnakeGameView(model, this);
+        this.frequency = frequency;
+        // ((Window) view).setVisible(true);
+        this.model.attach(this);
+        this.model.attach(this.view);
+        this.gameTimer = gameTimer;
     }
 
     @Override
@@ -34,8 +53,8 @@ public class SnakeGameController implements IGameController{
     }
     
     @Override
-    public void start() {
-        gameTimer.run();
+    public void start(int frequency) {
+        gameTimer.run(frequency);
     }
 
     @Override
@@ -45,7 +64,7 @@ public class SnakeGameController implements IGameController{
 
     @Override
     public void recover() {
-        gameTimer = generateTimer(model, view);
+        gameTimer = new SnakeGameTimer(frequency, task);
     }
 
     @Override
@@ -53,8 +72,13 @@ public class SnakeGameController implements IGameController{
         pause();
     }
 
+    public IGameView getView() {
+        return view;
+    }
+
     public static void main(String[] args) {
         MockSnakeGameModel model = new MockSnakeGameModel();
+        SnakeGameTimer timer =  new SnakeGameTimer(model, view, frequency);
         SnakeGameController controller = new SnakeGameController(model);
 
         controller.start();
