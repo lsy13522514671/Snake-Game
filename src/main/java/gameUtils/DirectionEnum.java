@@ -1,5 +1,5 @@
 package gameUtils;
 
 public enum DirectionEnum {
-    UP, DOWN, LEFT, RIGHT
+    UP, DOWN, LEFT, RIGHT;
 }

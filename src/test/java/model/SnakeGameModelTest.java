@@ -39,11 +39,11 @@ public class SnakeGameModelTest {
         assertEquals(rowNum, model.getRowNum());
         assertEquals(colNum, model.getColNum());
 
-        Position applePos = model.getApplePos();
+        Posn applePos = model.getApplePos();
         assertTrue((applePos.getXPos() >= 0) && (applePos.getXPos() < colNum));
         assertTrue((applePos.getYPos() >= 0) && (applePos.getYPos() < rowNum));
 
-        LinkedList<Position> positions = model.getSnakePosition();
+        LinkedList<Posn> positions = model.getSnakePosition();
 
         for (int i = 0; i < initSnakePos.length; i++) {
             assertEquals(initSnakePos[i][0], positions.get(i).getXPos());
@@ -53,7 +53,7 @@ public class SnakeGameModelTest {
 
     @Test
     public void testSnakeMove() {
-        LinkedList<Position> positions = model.getSnakePosition();
+        LinkedList<Posn> positions = model.getSnakePosition();
         int curLength = positions.size();
         assertEquals(initLength, curLength);
 
@@ -94,7 +94,7 @@ public class SnakeGameModelTest {
 
     @Test
     public void testSnakeGrow() {
-        LinkedList<Position> positions = model.getSnakePosition();
+        LinkedList<Posn> positions = model.getSnakePosition();
         int curLength = positions.size();
         assertEquals(initLength, curLength);
 

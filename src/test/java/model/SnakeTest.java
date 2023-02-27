@@ -11,16 +11,16 @@ import gameUtils.DirectionEnum;
 public class SnakeTest {
     @Test
     public void testSnakeInit() {
-        Snake snake = new Snake(new Position(2, 1));
+        Snake snake = new Snake(new Posn(2, 1));
         int[][] targetPos = { { 2, 1 }, { 1, 1 } };
-        LinkedList<Position> positions = snake.getBodyPartPos();
+        LinkedList<Posn> positions = snake.getBodyPartPos();
 
         // This test ensures the snake is initialized with a length of 3.
         assertEquals(targetPos.length, snake.getCurLength());
 
         // This test ensures each position is correct.
         for (int i = 0; i < targetPos.length; i++) {
-            Position curPos = positions.get(i);
+            Posn curPos = positions.get(i);
             assertEquals(curPos.getXPos(), targetPos[i][0]);
             assertEquals(curPos.getYPos(), targetPos[i][1]);
         }
@@ -28,7 +28,7 @@ public class SnakeTest {
 
     @Test
     public void testSnakeMove() {
-        Snake snake = new Snake(new Position(2, 1));
+        Snake snake = new Snake(new Posn(2, 1));
         // moving right.
         snake.move();
         // moving right again.
@@ -47,11 +47,11 @@ public class SnakeTest {
         snake.move();
 
         int[][] targetPos = { { 3, 1 }, { 3, 2 } };
-        LinkedList<Position> positions = snake.getBodyPartPos();
+        LinkedList<Posn> positions = snake.getBodyPartPos();
 
         // This test ensures each body part position is correct.
         for (int i = 0; i < targetPos.length; i++) {
-            Position curPos = positions.get(i);
+            Posn curPos = positions.get(i);
             assertEquals(curPos.getXPos(), targetPos[i][0]);
             assertEquals(curPos.getYPos(), targetPos[i][1]);
         }
@@ -62,7 +62,7 @@ public class SnakeTest {
 
     @Test
     public void testSnakeGrow() {
-        Snake snake = new Snake(new Position(2, 1));
+        Snake snake = new Snake(new Posn(2, 1));
         // moving right
         snake.move();
         // moving right again
@@ -72,12 +72,12 @@ public class SnakeTest {
         // moving up
         snake.move();
         // This test ensures the move does not grow the body.
-        LinkedList<Position> positions = snake.getBodyPartPos();
+        LinkedList<Posn> positions = snake.getBodyPartPos();
         assertEquals(positions.size(), 2);
         //moving up again
         snake.move();
         //eating an apple
-        snake.grow(new Position(4, 1));
+        snake.grow(new Posn(4, 1));
 
         int[][] targetPos = { { 4, 3 }, { 4, 2 }, { 4, 1 } };
         // This test makes sure the snake grows by only one body part.
@@ -86,7 +86,7 @@ public class SnakeTest {
         // This test ensures each body part position is correct.
         positions = snake.getBodyPartPos();
         for (int i = 0; i < targetPos.length; i++) {
-            Position curPos = positions.get(i);
+            Posn curPos = positions.get(i);
             assertEquals(curPos.getXPos(), targetPos[i][0]);
             assertEquals(curPos.getYPos(), targetPos[i][1]);
         }

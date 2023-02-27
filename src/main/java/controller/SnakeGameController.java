@@ -1,32 +1,34 @@
 package controller;
 
 import gameUtils.DirectionEnum;
-import model.ISnakeGameModel;
+import model.IGameModel;
+import model.MockSnakeGameModel;
 import model.SnakeGameModel;
-import view.ISnakeGameView;
+import view.IGameView;
 import view.SnakeGameView;
 
 import java.awt.Window;
 import java.util.Random;
 
-public class SnakeGameController implements ISnakeGameController{
-    private ISnakeGameModel model;
-    private ISnakeGameView view;
+public class SnakeGameController implements IGameController{
+    private IGameModel model;
+    private IGameView view;
     private SnakeGameTimer gameTimer;
 
-    public SnakeGameController() {
-        model = new SnakeGameModel(4, 4, new Random(0));
-        view = new SnakeGameView(model, this);
+    public SnakeGameController(IGameModel model) {
+        this.model = model;
+        this.view = new SnakeGameView(model, this);
         // ((Window) view).setVisible(true);
-        model.attach(this);
-        model.attach(view);
-        gameTimer = generateTimer(model, view);
+        this.model.attach(this);
+        this.model.attach(view);
+        this.gameTimer = generateTimer(model, view);
     }
 
-    private SnakeGameTimer generateTimer(ISnakeGameModel model, ISnakeGameView view) {
+    private SnakeGameTimer generateTimer(IGameModel model, IGameView view) {
         return new SnakeGameTimer(model, view);
     }
 
+    @Override
     public void setSnakeDirection(DirectionEnum direction) {
         model.setSnakeDirection(direction);
     }
@@ -52,10 +54,12 @@ public class SnakeGameController implements ISnakeGameController{
     }
 
     public static void main(String[] args) {
-
-        SnakeGameController controller = new SnakeGameController();
+        MockSnakeGameModel model = new MockSnakeGameModel();
+        SnakeGameController controller = new SnakeGameController(model);
 
         controller.start();
+
+        System.out.println(model.printLog());
     }
     
 }

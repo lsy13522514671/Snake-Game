@@ -14,17 +14,17 @@ class Snake {
     // current direction
     private DirectionEnum direction;
     // each snake body part position represented in a Cartisian coordinate
-    private LinkedList<Position> bodyPartPos;
-    private Position headPos; // a pointer to the snake head
+    private LinkedList<Posn> bodyPartPos;
+    private Posn headPos; // a pointer to the snake head
     // private Position lastTailPos = null;
 
-    Snake(Position position) {
+    Snake(Posn position) {
         // the initial direction towards right
         direction = DirectionEnum.RIGHT;
         // the snake initially has two body parts by default
         bodyPartPos = new LinkedList<>();
         bodyPartPos.addLast(position);
-        bodyPartPos.addLast(new Position(position.getXPos() - 1, position.getYPos()));
+        bodyPartPos.addLast(new Posn(position.getXPos() - 1, position.getYPos()));
         // head position pointer
         headPos = bodyPartPos.peek();
     }
@@ -39,16 +39,16 @@ class Snake {
     void move() {
         switch (direction) {
             case UP:
-                bodyPartPos.addFirst(new Position(headPos.getXPos(), headPos.getYPos() + 1));
+                bodyPartPos.addFirst(new Posn(headPos.getXPos(), headPos.getYPos() + 1));
                 break;
             case DOWN:
-                bodyPartPos.addFirst(new Position(headPos.getXPos(), headPos.getYPos() - 1));
+                bodyPartPos.addFirst(new Posn(headPos.getXPos(), headPos.getYPos() - 1));
                 break;
             case LEFT:
-                bodyPartPos.addFirst(new Position(headPos.getXPos() - 1, headPos.getYPos()));
+                bodyPartPos.addFirst(new Posn(headPos.getXPos() - 1, headPos.getYPos()));
                 break;
             case RIGHT:
-                bodyPartPos.addFirst(new Position(headPos.getXPos() + 1, headPos.getYPos()));
+                bodyPartPos.addFirst(new Posn(headPos.getXPos() + 1, headPos.getYPos()));
                 break;
         }
         this.headPos = bodyPartPos.peek();
@@ -59,8 +59,8 @@ class Snake {
      * This method is used by the model to make a snake grow. While a snake eats an
      * apple, it grows one additional body part position at the specified location.
      */
-    void grow(Position pos) {
-        bodyPartPos.add(new Position(pos.getXPos(), pos.getYPos()));
+    void grow(Posn pos) {
+        bodyPartPos.add(new Posn(pos.getXPos(), pos.getYPos()));
     }
 
     /**
@@ -77,7 +77,7 @@ class Snake {
      * 
      * @return the snake body parts positions
      */
-    LinkedList<Position> getBodyPartPos() {
+    LinkedList<Posn> getBodyPartPos() {
         return bodyPartPos;
     }
 
@@ -86,7 +86,7 @@ class Snake {
      * 
      * @return head position pointer
      */
-    Position getHeadPos() {
+    Posn getHeadPos() {
         return headPos;
     }
 

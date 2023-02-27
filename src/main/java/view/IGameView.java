@@ -2,6 +2,6 @@ package view;
 
 import gameUtils.IGameObserver;
 
-public interface ISnakeGameView extends IGameObserver {
+public interface IGameView extends IGameObserver {
     public void paint();
 }

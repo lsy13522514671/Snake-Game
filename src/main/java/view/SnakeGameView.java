@@ -2,14 +2,14 @@ package view;
 
 import javax.swing.JFrame;
 
-import controller.ISnakeGameController;
-import model.ISnakeGameModel;
+import controller.IGameController;
+import model.IGameModel;
 
-public class SnakeGameView extends JFrame implements ISnakeGameView {
-    ISnakeGameModel model;
-    ISnakeGameController controller;
+public class SnakeGameView extends JFrame implements IGameView {
+    IGameModel model;
+    IGameController controller;
 
-    public SnakeGameView(ISnakeGameModel model, ISnakeGameController controller) {
+    public SnakeGameView(IGameModel model, IGameController controller) {
         this.model = model;
         this.controller = controller;
     }

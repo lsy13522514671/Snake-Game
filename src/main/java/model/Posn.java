@@ -1,10 +1,10 @@
 package model;
 
-public class Position {
+public class Posn {
     private int xPos;
     private int yPos;
 
-    public Position(int xPos, int yPos) {
+    public Posn(int xPos, int yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
     }
@@ -55,7 +55,7 @@ public class Position {
             return false;
         }
 
-        Position position = (Position) target;
+        Posn position = (Posn) target;
         if((xPos == position.getXPos()) && (yPos == position.getYPos())) {
             return true;
         }

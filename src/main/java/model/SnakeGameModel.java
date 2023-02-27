@@ -8,12 +8,12 @@ import java.util.Random;
 import gameUtils.DirectionEnum;
 import gameUtils.IGameObserver;
 
-public class SnakeGameModel implements ISnakeGameModel {
+public class SnakeGameModel implements IGameModel {
     private int rowNum;
     private int colNum;
     private Snake snake;
-    private LinkedList<Position> lastSnakePos = new LinkedList<>();
-    private Position apple;
+    private LinkedList<Posn> lastSnakePos = new LinkedList<>();
+    private Posn apple;
     private ArrayList<IGameObserver> observers;
     private Random seed;
 
@@ -24,7 +24,7 @@ public class SnakeGameModel implements ISnakeGameModel {
 
         this.rowNum = rowNum;
         this.colNum = colNum;
-        this.snake = new Snake(new Position(colNum / 2, rowNum / 2));
+        this.snake = new Snake(new Posn(colNum / 2, rowNum / 2));
         this.seed = seed;
         generateApple();
         this.observers = new ArrayList<>();
@@ -32,15 +32,15 @@ public class SnakeGameModel implements ISnakeGameModel {
 
     private void recordLastSnakePos() {
         lastSnakePos.clear();
-        LinkedList<Position> snakePos = snake.getBodyPartPos();
-        for(Position pos: snakePos) {
+        LinkedList<Posn> snakePos = snake.getBodyPartPos();
+        for(Posn pos: snakePos) {
             lastSnakePos.add(pos);
         }
     }
 
 
-    private boolean isValidApplePos(Position applePos) {
-        LinkedList<Position> snakeBodyPos = snake.getBodyPartPos();
+    private boolean isValidApplePos(Posn applePos) {
+        LinkedList<Posn> snakeBodyPos = snake.getBodyPartPos();
 
         // return !(Utils.containsPos(snakeBodyPos, applePos));
         return !snakeBodyPos.contains(applePos);
@@ -49,12 +49,12 @@ public class SnakeGameModel implements ISnakeGameModel {
     private void generateApple() {
         int appleX = ModelUtils.generateRandomInt(seed, 0, colNum - 1);
         int appleY = ModelUtils.generateRandomInt(seed, 0, rowNum - 1);
-        Position applePos = new Position(appleX, appleY);
+        Posn applePos = new Posn(appleX, appleY);
 
         while (!isValidApplePos(applePos)) {
             appleX = ModelUtils.generateRandomInt(seed, 0, colNum - 1);
             appleY = ModelUtils.generateRandomInt(seed, 0, rowNum - 1);
-            applePos = new Position(appleX, appleY);
+            applePos = new Posn(appleX, appleY);
         }
 
         apple = applePos;
@@ -63,7 +63,7 @@ public class SnakeGameModel implements ISnakeGameModel {
 
 
     private boolean isEatingApple() {
-        Position head = snake.getHeadPos();
+        Posn head = snake.getHeadPos();
         return head.equals(apple);
     }
 
@@ -121,19 +121,19 @@ public class SnakeGameModel implements ISnakeGameModel {
 
     @Override
     public boolean isGameOver() {
-        Position head = snake.getHeadPos();
+        Posn head = snake.getHeadPos();
 
         if ((head.getXPos() < 0) || (head.getYPos() < 0) || (head.getXPos() >= colNum)
                 || (head.getYPos() >= rowNum)) {
             return true;
         }
 
-        LinkedList<Position> snakePos = snake.getBodyPartPos();
+        LinkedList<Posn> snakePos = snake.getBodyPartPos();
 
-        LinkedList<Position> bodyPos = new LinkedList<>();
+        LinkedList<Posn> bodyPos = new LinkedList<>();
         for (int i = 1; i < snakePos.size(); i++) {
-            Position pos = snakePos.get(i);
-            bodyPos.add(new Position(pos.getXPos(), pos.getYPos()));
+            Posn pos = snakePos.get(i);
+            bodyPos.add(new Posn(pos.getXPos(), pos.getYPos()));
         }
 
         if (bodyPos.contains(head)) {
@@ -153,13 +153,13 @@ public class SnakeGameModel implements ISnakeGameModel {
 
         map[apple.getYPos()][apple.getXPos()] = 'A';
         
-        LinkedList<Position> snakePos = snake.getBodyPartPos();
+        LinkedList<Posn> snakePos = snake.getBodyPartPos();
 
         if(isGameOver()) {
             snakePos = lastSnakePos;
         }
 
-        for(Position pos: snakePos) {
+        for(Posn pos: snakePos) {
             map[pos.getYPos()][pos.getXPos()] = 'S';
         }
 
@@ -200,11 +200,11 @@ public class SnakeGameModel implements ISnakeGameModel {
         return colNum;
     }
 
-    public LinkedList<Position> getSnakePosition() {
+    public LinkedList<Posn> getSnakePosition() {
         return snake.getBodyPartPos();
     }
 
-    public Position getApplePos() {
+    public Posn getApplePos() {
         return apple;
     }
 
