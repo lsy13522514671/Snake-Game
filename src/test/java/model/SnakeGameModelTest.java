@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import gameUtils.DirectionEnum;
 
-public class SnakeGameModelTest {
+class SnakeGameModelTest {
     int rowNum = 4;
     int colNum = 4;
     SnakeGameModel model = null;
@@ -20,12 +20,12 @@ public class SnakeGameModelTest {
     int initLength = 2;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         model = new SnakeGameModel(rowNum, colNum, new Random(0));
     }
 
     @Test
-    public void testSnakeGameModelInitException() {
+    void testSnakeGameModelInitException() {
         IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
                 () -> new SnakeGameModel(3, 4, new Random()),
@@ -35,7 +35,7 @@ public class SnakeGameModelTest {
     }
 
     @Test
-    public void testSnakeGameModelInit() {
+    void testSnakeGameModelInit() {
         assertEquals(rowNum, model.getRowNum());
         assertEquals(colNum, model.getColNum());
 
@@ -52,36 +52,36 @@ public class SnakeGameModelTest {
     }
 
     @Test
-    public void testSnakeMove() {
+    void testSnakeMove() {
         LinkedList<Posn> positions = model.getSnakePosition();
         int curLength = positions.size();
         assertEquals(initLength, curLength);
 
-        // Snake moves right.
+        // snake moves right
         model.moveSnake();
 
-        // Snake does not turn left, because it's an invalid direction at the moment.
+        // snake does not turn left, because it's an invalid direction at the moment
         model.setSnakeDirection(DirectionEnum.LEFT);
 
-        // Snake moves down.
+        // snake moves down
         model.setSnakeDirection(DirectionEnum.DOWN);
         model.moveSnake();
 
-        // Snake moves down again.
+        // snake moves down again
         model.moveSnake();
 
-        // Snake moves left.
+        // snake moves left
         model.setSnakeDirection(DirectionEnum.LEFT);
         model.moveSnake();
 
-        // Snake moves up.
+        // snake moves up
         model.setSnakeDirection(DirectionEnum.UP);
         model.moveSnake();
 
         positions = model.getSnakePosition();
         curLength = positions.size();
 
-        // The snake length does not change as it does not eat anything.
+        // the snake length does not change as it eats nothing
         assertEquals(initLength, curLength);
 
         int[][] targetPos = { { 2, 1 }, { 2, 0 } };
@@ -93,33 +93,33 @@ public class SnakeGameModelTest {
     }
 
     @Test
-    public void testSnakeGrow() {
+    void testSnakeGrow() {
         LinkedList<Posn> positions = model.getSnakePosition();
         int curLength = positions.size();
         assertEquals(initLength, curLength);
 
-        // Snake moves right.
+        // snake moves right
         model.moveSnake();
 
-        // Snake moves down.
+        // snake moves down
         model.setSnakeDirection(DirectionEnum.DOWN);
         model.moveSnake();
 
-        // Snake moves down again.
+        // snake moves down again
         model.moveSnake();
 
-        // Snake moves left.
+        // snake moves left
         model.setSnakeDirection(DirectionEnum.LEFT);
         model.moveSnake();
 
-        // Snake moves up.
+        // snake moves up
         model.setSnakeDirection(DirectionEnum.UP);
         model.moveSnake();
 
-        // Snake moves up again.
+        // snake moves up again
         model.moveSnake();
 
-        // And again, snake moves up.
+        // and again, snake moves up
         model.moveSnake();
 
         positions = model.getSnakePosition();
@@ -136,112 +136,112 @@ public class SnakeGameModelTest {
     }
 
     @Test
-    public void testSnakeCrashTopWall() {
-        // Snake moves right.
+    void testSnakeCrashTopWall() {
+        // snake moves right
         model.moveSnake();
 
-        // Snake moves up.
+        // snake moves up
         model.setSnakeDirection(DirectionEnum.UP);
         model.moveSnake();
 
-        // Snake moves up again and crash on the wall.
+        // snake moves up again and crash on the wall
         model.moveSnake();
 
         assertTrue(model.isGameOver());
     }
 
     @Test
-    public void testSnakeCrashBottomWall() {
-        // Snake moves right.
+    void testSnakeCrashBottomWall() {
+        // snake moves right
         model.moveSnake();
 
-        // Snake moves down.
+        // snake moves down
         model.setSnakeDirection(DirectionEnum.DOWN);
         model.moveSnake();
 
-        // Snake moves down.
+        // snake moves down
         model.moveSnake();
 
-        // Snake moves down again and crash on the wall.
+        // snake moves down again and crash on the wall
         model.moveSnake();
 
         assertTrue(model.isGameOver());
     }
 
     @Test
-    public void testSnakeCrashLeftWall() {
-        // Snake moves right.
+    void testSnakeCrashLeftWall() {
+        // snake moves right
         model.moveSnake();
 
-        // Snake moves right.
+        // snake moves right
         model.moveSnake();
 
-        // Snake moves down.
+        // snake moves down
         model.moveSnake();
 
-        // Snake moves left.
+        // snake moves left
         model.setSnakeDirection(DirectionEnum.LEFT);
         model.moveSnake();
 
-        // Snake moves left again.
+        // snake moves left again
         model.moveSnake();
 
-        // And again, snake moves left.
+        // and again, snake moves left
         model.moveSnake();
 
-        // Snake moves left again and crash on the wall.
-        model.moveSnake();
-
-        assertTrue(model.isGameOver());
-    }
-
-    @Test
-    public void testSnakeCrashRightWall() {
-        // Snake moves right.
-        model.moveSnake();
-
-        // Snake moves right again and crash on the wall.
+        // snake moves left again and crash on the wall
         model.moveSnake();
 
         assertTrue(model.isGameOver());
     }
 
     @Test
-    public void testSnakeCrashBody() {
-        // Snake moves up.
+    void testSnakeCrashRightWall() {
+        // snake moves right
+        model.moveSnake();
+
+        // snake moves right again and crash on the wall
+        model.moveSnake();
+
+        assertTrue(model.isGameOver());
+    }
+
+    @Test
+    void testSnakeCrashBody() {
+        // snake moves up
         model.setSnakeDirection(DirectionEnum.UP);
         model.moveSnake();
 
-        // Snake moves left.
+        // snake moves left
         model.setSnakeDirection(DirectionEnum.LEFT);
         model.moveSnake();
 
-        // Snake moves left again.
+        // snake moves left again
         model.moveSnake();
 
-        // Snake moves down.
+        // snake moves down
         model.setSnakeDirection(DirectionEnum.DOWN);
         model.moveSnake();
 
-        // Snake moves down again.
+        // snake moves down again
         model.moveSnake();
 
-        // Snake moves right.
+        // snake moves right
         model.setSnakeDirection(DirectionEnum.RIGHT);
         model.moveSnake();
 
-        // Snake moves right again
+        // snake moves right again
         model.moveSnake();
 
-        // Snake moves up.
+        // snake moves up
         model.setSnakeDirection(DirectionEnum.UP);
         model.moveSnake();
 
-        // Snake moves left.
+        // snake moves left
         model.setSnakeDirection(DirectionEnum.LEFT);
         model.moveSnake();
 
-        // Snake moves down and crash on its body.
+        // snake moves down and crash on its body
         model.setSnakeDirection(DirectionEnum.DOWN);
         model.moveSnake();
 

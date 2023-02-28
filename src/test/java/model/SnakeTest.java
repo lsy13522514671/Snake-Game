@@ -8,17 +8,17 @@ import org.junit.jupiter.api.Test;
 
 import gameUtils.DirectionEnum;
 
-public class SnakeTest {
+class SnakeTest {
     @Test
-    public void testSnakeInit() {
+    void testSnakeInit() {
         Snake snake = new Snake(new Posn(2, 1));
         int[][] targetPos = { { 2, 1 }, { 1, 1 } };
         LinkedList<Posn> positions = snake.getBodyPartPos();
 
-        // This test ensures the snake is initialized with a length of 3.
+        // this test ensures the snake is initialized with a length of 3
         assertEquals(targetPos.length, snake.getCurLength());
 
-        // This test ensures each position is correct.
+        // this test ensures each position is correct
         for (int i = 0; i < targetPos.length; i++) {
             Posn curPos = positions.get(i);
             assertEquals(curPos.getXPos(), targetPos[i][0]);
@@ -27,21 +27,21 @@ public class SnakeTest {
     }
 
     @Test
-    public void testSnakeMove() {
+    void testSnakeMove() {
         Snake snake = new Snake(new Posn(2, 1));
-        // moving right.
+        // moving right
         snake.move();
-        // moving right again.
+        // moving right again
         snake.move();
-        // setting up.
+        // setting up
         snake.setDirection(DirectionEnum.UP);
-        // moving left.
+        // moving left
         snake.move();
-        // setting left.
+        // setting left
         snake.setDirection(DirectionEnum.LEFT);
-        // moving left.
+        // moving left
         snake.move();
-        // setting down.
+        // setting down
         snake.setDirection(DirectionEnum.DOWN);
         // moving down
         snake.move();
@@ -49,19 +49,19 @@ public class SnakeTest {
         int[][] targetPos = { { 3, 1 }, { 3, 2 } };
         LinkedList<Posn> positions = snake.getBodyPartPos();
 
-        // This test ensures each body part position is correct.
+        // this test ensures each body part position is correct
         for (int i = 0; i < targetPos.length; i++) {
             Posn curPos = positions.get(i);
             assertEquals(curPos.getXPos(), targetPos[i][0]);
             assertEquals(curPos.getYPos(), targetPos[i][1]);
         }
 
-        // This test ensures the move does not grow the body.
+        // this test ensures the move does not grow the body
         assertEquals(positions.size(), targetPos.length);
     }
 
     @Test
-    public void testSnakeGrow() {
+    void testSnakeGrow() {
         Snake snake = new Snake(new Posn(2, 1));
         // moving right
         snake.move();
@@ -71,25 +71,25 @@ public class SnakeTest {
         snake.setDirection(DirectionEnum.UP);
         // moving up
         snake.move();
-        // This test ensures the move does not grow the body.
+        // This test ensures the move does not grow the body
         LinkedList<Posn> positions = snake.getBodyPartPos();
         assertEquals(positions.size(), 2);
-        //moving up again
+        // moving up again
         snake.move();
-        //eating an apple
+        // eating an apple
         snake.grow(new Posn(4, 1));
 
         int[][] targetPos = { { 4, 3 }, { 4, 2 }, { 4, 1 } };
-        // This test makes sure the snake grows by only one body part.
+        // this test makes sure the snake grows by only one body part
         assertEquals(positions.size(), targetPos.length);
 
-        // This test ensures each body part position is correct.
+        // this test ensures each body part position is correct
         positions = snake.getBodyPartPos();
         for (int i = 0; i < targetPos.length; i++) {
             Posn curPos = positions.get(i);
             assertEquals(curPos.getXPos(), targetPos[i][0]);
             assertEquals(curPos.getYPos(), targetPos[i][1]);
         }
-        
+
     }
 }

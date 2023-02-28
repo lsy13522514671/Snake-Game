@@ -6,17 +6,15 @@ import gameUtils.DirectionEnum;
 
 /**
  * The Snake class implements a real snake! It stores the current moving
- * direction, the body part positions, the head position, and the tail in the
- * last round of the game. The model uses this class to maintain and manipulate
- * the snake in the game.
+ * direction, the body part positions, and the head position. The model uses
+ * this class to maintain and manipulate the snake in the game.
  */
 class Snake {
     // current direction
     private DirectionEnum direction;
-    // each snake body part position represented in a Cartisian coordinate
+    // each snake body part position represented by a position object
     private LinkedList<Posn> bodyPartPos;
     private Posn headPos; // a pointer to the snake head
-    // private Position lastTailPos = null;
 
     Snake(Posn position) {
         // the initial direction towards right
@@ -25,7 +23,7 @@ class Snake {
         bodyPartPos = new LinkedList<>();
         bodyPartPos.addLast(position);
         bodyPartPos.addLast(new Posn(position.getXPos() - 1, position.getYPos()));
-        // head position pointer
+        // head position pointer point to the first snake body part
         headPos = bodyPartPos.peek();
     }
 
@@ -33,7 +31,6 @@ class Snake {
      * This method is used by the model to move a snake. The snake moves and updates
      * its head and tail. A move action only creates a new head and removes the
      * tail under the hood.
-     * 
      */
 
     void move() {
@@ -58,6 +55,8 @@ class Snake {
     /**
      * This method is used by the model to make a snake grow. While a snake eats an
      * apple, it grows one additional body part position at the specified location.
+     * 
+     * @param pos position that the snake body part to grow at
      */
     void grow(Posn pos) {
         bodyPartPos.add(new Posn(pos.getXPos(), pos.getYPos()));
@@ -73,9 +72,9 @@ class Snake {
     }
 
     /**
-     * This method gets all snake body parts positions.
+     * This method gets all snake body part positions.
      * 
-     * @return the snake body parts positions
+     * @return the snake body part positions
      */
     LinkedList<Posn> getBodyPartPos() {
         return bodyPartPos;
