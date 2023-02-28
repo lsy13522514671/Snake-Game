@@ -3,23 +3,32 @@ package controller;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import gameUtils.IGameTimer;
+import model.ISnakeGameModel;
+import view.ISnakeGameView;
 
-class SnakeGameTimer implements IGameTimer {
+class SnakeGameTimer {
     private Timer gameTimer;
     private TimerTask timerTask;
 
-    SnakeGameTimer(int frequency, TimerTask timerTask) {
+    SnakeGameTimer(ISnakeGameModel model, ISnakeGameView view) {
         this.gameTimer = new Timer();
-        this.timerTask = timerTask;
+        this.timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                model.moveSnake();
+                // view.paint();
+                // System.out.println("display round: ");
+                // model.printMap();
+                // System.out.println("\n");
+                view.paint();
+            }
+        };
     }
 
-    @Override
-    public void run(int frequency) {
-        gameTimer.schedule(timerTask, 0, frequency);
+    public void run(int period) {
+        gameTimer.schedule(timerTask, 0, period);
     }
 
-    @Override
     public void destroy() {
         timerTask.cancel();
         gameTimer.cancel();

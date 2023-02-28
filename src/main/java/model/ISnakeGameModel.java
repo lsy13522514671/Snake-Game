@@ -1,14 +1,12 @@
 package model;
 
 import gameUtils.DirectionEnum;
-import gameUtils.IGameOverserable;
+import gameUtils.ISnakeGameOverserable;
 
-public interface IGameModel extends IGameOverserable{
+public interface ISnakeGameModel extends ISnakeGameOverserable{
     public void setSnakeDirection(DirectionEnum direction);
 
     public void moveSnake();
 
     public boolean isGameOver();
-
-    public void printMap();
 }

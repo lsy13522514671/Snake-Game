@@ -1,9 +1,9 @@
 package controller;
 
 import gameUtils.DirectionEnum;
-import gameUtils.IGameObserver;
+import gameUtils.ISnakeGameObserver;
 
-public interface IGameController extends IGameObserver {
+public interface ISnakeGameController extends ISnakeGameObserver {
 
     public void setSnakeDirection(DirectionEnum direction);
 

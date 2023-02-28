@@ -6,18 +6,18 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import gameUtils.DirectionEnum;
-import gameUtils.IGameObserver;
+import gameUtils.ISnakeGameObserver;
 
-public class SnakeGameModel implements IGameModel {
+public class SnakeGameModel implements ISnakeGameModel {
     private int rowNum;
     private int colNum;
     private Snake snake;
     private LinkedList<Posn> lastSnakePos = new LinkedList<>();
     private Posn apple;
-    private ArrayList<IGameObserver> observers;
-    private Random seed;
+    private ArrayList<ISnakeGameObserver> observers;
+    private Random rand;
 
-    public SnakeGameModel(int rowNum, int colNum, Random seed) throws IllegalArgumentException {
+    public SnakeGameModel(int rowNum, int colNum, Random rand) throws IllegalArgumentException {
         if ((rowNum < 4) || (colNum < 4)) {
             throw new IllegalArgumentException("Illegal Board Size!");
         }
@@ -25,7 +25,7 @@ public class SnakeGameModel implements IGameModel {
         this.rowNum = rowNum;
         this.colNum = colNum;
         this.snake = new Snake(new Posn(colNum / 2, rowNum / 2));
-        this.seed = seed;
+        this.rand = rand;
         generateApple();
         this.observers = new ArrayList<>();
     }
@@ -47,13 +47,13 @@ public class SnakeGameModel implements IGameModel {
     }
 
     private void generateApple() {
-        int appleX = ModelUtils.generateRandomInt(seed, 0, colNum - 1);
-        int appleY = ModelUtils.generateRandomInt(seed, 0, rowNum - 1);
+        int appleX = ModelUtils.generateRandomInt(rand, 0, colNum - 1);
+        int appleY = ModelUtils.generateRandomInt(rand, 0, rowNum - 1);
         Posn applePos = new Posn(appleX, appleY);
 
         while (!isValidApplePos(applePos)) {
-            appleX = ModelUtils.generateRandomInt(seed, 0, colNum - 1);
-            appleY = ModelUtils.generateRandomInt(seed, 0, rowNum - 1);
+            appleX = ModelUtils.generateRandomInt(rand, 0, colNum - 1);
+            appleY = ModelUtils.generateRandomInt(rand, 0, rowNum - 1);
             applePos = new Posn(appleX, appleY);
         }
 
@@ -109,7 +109,7 @@ public class SnakeGameModel implements IGameModel {
         snake.move();
 
         if (isGameOver()) {
-            notifyGameOver();
+            gameOverNotify();
             return;
         }
 
@@ -143,7 +143,6 @@ public class SnakeGameModel implements IGameModel {
         return false;
     }
 
-    @Override
     public void printMap() {
         char[][] map = new char[rowNum][colNum];
 
@@ -176,19 +175,19 @@ public class SnakeGameModel implements IGameModel {
     }
 
     @Override
-    public void attach(IGameObserver observer) {
+    public void attach(ISnakeGameObserver observer) {
         observers.add(observer);
     }
 
     @Override
-    public void detach(IGameObserver observer) {
+    public void detach(ISnakeGameObserver observer) {
         observers.remove(observer);
     }
 
     @Override
-    public void notifyGameOver() {
-        for (IGameObserver observer : observers) {
-            observer.update();
+    public void gameOverNotify() {
+        for (ISnakeGameObserver observer : observers) {
+            observer.gameOverUpdate();
         }
     }
 
@@ -214,13 +213,5 @@ public class SnakeGameModel implements IGameModel {
 
     public void setColNum(int colNum) {
         this.colNum = colNum;
-    }
-
-    public static void main(String[] args) {
-        int rowNum = 4;
-        int colNum = 4;
-
-        SnakeGameModel model = new SnakeGameModel(rowNum, colNum, new Random(0));
-
     }
 }

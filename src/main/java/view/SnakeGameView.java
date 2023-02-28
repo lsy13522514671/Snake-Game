@@ -2,16 +2,15 @@ package view;
 
 import javax.swing.JFrame;
 
-import controller.IGameController;
-import model.IGameModel;
+import controller.ISnakeGameController;
+import model.ISnakeGameModel;
 
-public class SnakeGameView extends JFrame implements IGameView {
-    IGameModel model;
-    IGameController controller;
+public class SnakeGameView extends JFrame implements ISnakeGameView {
+    ISnakeGameModel model;
+    ISnakeGameController control = null;
 
-    public SnakeGameView(IGameModel model, IGameController controller) {
+    public SnakeGameView(ISnakeGameModel model) {
         this.model = model;
-        this.controller = controller;
     }
 
     private void initFrame() {
@@ -21,14 +20,17 @@ public class SnakeGameView extends JFrame implements IGameView {
         setResizable(false);
     }
 
-    @Override
-    public void paint() {
-        System.out.println("displayed the screen!");
+    public void setControl(ISnakeGameController control) {
+        this.control = control;
     }
 
     @Override
-    public void update() {
-        System.out.println("displayed ending msg!");
+    public void paint() {
+        System.out.println("The view displayed the current game screen.\n");
     }
-    
+
+    @Override
+    public void paintEndFrame() {
+        System.out.println("The view displayed the game over screen.\n");
+    }
 }

@@ -1,50 +1,25 @@
 package controller;
 
 import gameUtils.DirectionEnum;
-import gameUtils.IGameTimer;
-import model.IGameModel;
-import model.MockSnakeGameModel;
-import view.IGameView;
-import view.SnakeGameView;
+import model.ISnakeGameModel;
+import view.ISnakeGameView;
 
-import java.awt.Window;
-import java.util.Random;
-import java.util.TimerTask;
+public class SnakeGameController implements ISnakeGameController{
+    private ISnakeGameModel model;
+    private ISnakeGameView view;
+    private SnakeGameTimer gameTimer;
+    private int period;
 
-public class SnakeGameController implements IGameController{
-    private IGameModel model;
-    private IGameView view;
-    private IGameTimer gameTimer;
-    private TimerTask task;
-    private int frequency;
-
-    public SnakeGameController(IGameModel model, IGameTimer gameTimer) {
+    public SnakeGameController(ISnakeGameModel model) {
         this.model = model;
-        this.view = new SnakeGameView(model, this);
-        // ((Window) view).setVisible(true);
         this.model.attach(this);
-        this.model.attach(this.view);
-        this.task = new TimerTask() {
-            @Override
-            public void run() {
-                model.moveSnake();
-                // view.paint();
-                System.out.println("display round: ");
-                model.printMap();
-                System.out.println("\n");
-            }
-        };
-        this.gameTimer = gameTimer;
+        this.period = 1000;
     }
 
-    public SnakeGameController(IGameModel model, SnakeGameTimer gameTimer, int frequency) {
+    public SnakeGameController(ISnakeGameModel model, int period) {
         this.model = model;
-        this.view = new SnakeGameView(model, this);
-        this.frequency = frequency;
-        // ((Window) view).setVisible(true);
         this.model.attach(this);
-        this.model.attach(this.view);
-        this.gameTimer = gameTimer;
+        this.period = period;
     }
 
     @Override
@@ -64,26 +39,22 @@ public class SnakeGameController implements IGameController{
 
     @Override
     public void recover() {
-        gameTimer = new SnakeGameTimer(frequency, task);
+        this.gameTimer = new SnakeGameTimer(model, view);
+        start(period);
     }
 
     @Override
-    public void update() {
+    public void gameOverUpdate() {
         pause();
+        view.paintEndFrame();
     }
 
-    public IGameView getView() {
-        return view;
+    public int getPeriod() {
+        return period;
     }
 
-    public static void main(String[] args) {
-        MockSnakeGameModel model = new MockSnakeGameModel();
-        SnakeGameTimer timer =  new SnakeGameTimer(model, view, frequency);
-        SnakeGameController controller = new SnakeGameController(model);
-
-        controller.start();
-
-        System.out.println(model.printLog());
+    public void setView(ISnakeGameView view) {
+        this.view = view;
+        this.gameTimer = new SnakeGameTimer(model, view);
     }
-    
 }
