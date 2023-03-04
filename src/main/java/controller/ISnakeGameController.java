@@ -2,6 +2,7 @@ package controller;
 
 import gameUtils.DirectionEnum;
 import gameUtils.ISnakeGameObserver;
+import model.ISnakeGameModel;
 
 /**
  * The ISnakeGameController interface represents a snake game controller

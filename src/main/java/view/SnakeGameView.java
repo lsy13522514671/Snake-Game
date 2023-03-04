@@ -14,6 +14,7 @@ public class SnakeGameView extends JFrame implements ISnakeGameView {
     }
 
     private void initFrame() {
+        setTitle("Syary");
         setSize(540, 575);
         setLocation(240, 50);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -25,13 +25,23 @@ class SnakeGameModelTest {
     }
 
     @Test
-    void testSnakeGameModelInitException() {
+    void testSnakeGameModelInitLowRowException() {
         IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
                 () -> new SnakeGameModel(3, 4, new Random()),
                 "Expected the model to complain about the board size input, but it didn't");
 
-        assertTrue(thrown.getMessage().contentEquals("Illegal Board Size!"));
+        assertTrue(thrown.getMessage().contentEquals("Illegal row number: 3!"));
+    }
+
+    @Test
+    void testSnakeGameModelInitLowColException() {
+        IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> new SnakeGameModel(4, 3, new Random()),
+                "Expected the model to complain about the board size input, but it didn't");
+
+        assertTrue(thrown.getMessage().contentEquals("Illegal column number: 3!"));
     }
 
     @Test

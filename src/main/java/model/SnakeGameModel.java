@@ -27,8 +27,12 @@ public class SnakeGameModel implements ISnakeGameModel {
     private Random rand; // random object
 
     public SnakeGameModel(int rowNum, int colNum, Random rand) throws IllegalArgumentException {
-        if ((rowNum < 4) || (colNum < 4)) {
-            throw new IllegalArgumentException("Illegal Board Size!");
+        if (rowNum < 4) {
+            throw new IllegalArgumentException("Illegal row number: " + rowNum +"!");
+        }
+
+        if (colNum < 4) {
+            throw new IllegalArgumentException("Illegal column number: " + colNum +"!");
         }
 
         // below code initializes the model

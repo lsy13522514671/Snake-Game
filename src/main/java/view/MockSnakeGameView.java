@@ -9,14 +9,14 @@ public class MockSnakeGameView implements ISnakeGameView {
     public MockSnakeGameView(StringBuilder log) {
         this.log = log;
     }
+    
+    public void setControl(ISnakeGameController control) {
+        this.control = control;
+    }
 
     @Override
     public void paint() {
         log.append("The view painted the current game screen.\n");
-    }
-    
-    public void setControl(ISnakeGameController control) {
-        this.control = control;
     }
 
     @Override
