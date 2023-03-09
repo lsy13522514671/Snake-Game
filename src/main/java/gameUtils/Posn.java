@@ -1,4 +1,4 @@
-package model;
+package gameUtils;
 
 /**
  * The Posn class is used to record a position and it is used by the model to
@@ -9,7 +9,7 @@ public class Posn {
     private int xPos; // x coordinate
     private int yPos; // y coordinate
 
-    Posn(int xPos, int yPos) {
+    public Posn(int xPos, int yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
     }
@@ -19,7 +19,7 @@ public class Posn {
      * 
      * @return the x coordinate
      */
-    int getXPos() {
+    public int getXPos() {
         return xPos;
     }
 
@@ -28,7 +28,7 @@ public class Posn {
      * 
      * @return the y coordinate
      */
-    int getYPos() {
+    public int getYPos() {
         return yPos;
     }
 
@@ -37,7 +37,7 @@ public class Posn {
      * 
      * @param xPos the x coordinate
      */
-    void setXPos(int xPos) {
+    public void setXPos(int xPos) {
         this.xPos = xPos;
     }
 
@@ -46,7 +46,7 @@ public class Posn {
      * 
      * @param yPos the y coordinate
      */
-    void setYPos(int yPos) {
+    public void setYPos(int yPos) {
         this.yPos = yPos;
     }
 
@@ -56,7 +56,7 @@ public class Posn {
      * @param xPos the x coordinate
      * @param yPos the y coordinate
      */
-    void setPos(int xPos, int yPos) {
+    public void setPos(int xPos, int yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
     }

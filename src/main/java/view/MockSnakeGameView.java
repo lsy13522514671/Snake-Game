@@ -15,7 +15,7 @@ public class MockSnakeGameView implements ISnakeGameView {
     }
 
     @Override
-    public void paint() {
+    public void paintGameFrame() {
         log.append("The view painted the current game screen.\n");
     }
 

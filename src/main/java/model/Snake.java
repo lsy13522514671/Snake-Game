@@ -3,6 +3,7 @@ package model;
 import java.util.LinkedList;
 
 import gameUtils.DirectionEnum;
+import gameUtils.Posn;
 
 /**
  * The Snake class implements a real snake! It stores the current moving

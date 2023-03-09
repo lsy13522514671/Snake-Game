@@ -7,6 +7,7 @@ import java.util.Random;
 
 import gameUtils.DirectionEnum;
 import gameUtils.ISnakeGameObserver;
+import gameUtils.Posn;
 
 /**
  * This SnakeGameModel class represents the game model, which implements the

@@ -1,24 +1,25 @@
 package view;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import controller.ISnakeGameController;
 import model.ISnakeGameModel;
+import model.SnakeGameModel;
 
-public class SnakeGameView extends JFrame implements ISnakeGameView {
-    ISnakeGameModel model;
+public class SnakeGameView extends JDialog implements ISnakeGameView {
     ISnakeGameController control = null;
 
-    public SnakeGameView(ISnakeGameModel model) {
-        this.model = model;
-    }
+    public SnakeGameView(JFrame startWindow, SnakeGameModel model) {
+        super(startWindow);
+        setTitle("Snake Game");
+        SnakeGamePlayPanel mainPanel = new SnakeGamePlayPanel(model);
+        add(mainPanel);
 
-    private void initFrame() {
-        setTitle("Syary");
-        setSize(540, 575);
-        setLocation(240, 50);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
+        pack();
+        setModal(true);
+        setVisible(true);
     }
 
     public void setControl(ISnakeGameController control) {
@@ -26,12 +27,14 @@ public class SnakeGameView extends JFrame implements ISnakeGameView {
     }
 
     @Override
-    public void paint() {
+    public void paintGameFrame() {
         System.out.println("The view displayed the current game screen.\n");
+        repaint();
     }
 
     @Override
     public void paintEndFrame() {
         System.out.println("The view displayed the game over screen.\n");
+        repaint();
     }
 }

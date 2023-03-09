@@ -22,7 +22,7 @@ public interface ISnakeGameController extends ISnakeGameObserver {
      * 
      * @param frequency timer frequency controlling the snake movement speed
      */
-    public void start(int frequency);
+    public void start();
 
     /**
      * This method pauses the game timer. It stops the controller from moving the

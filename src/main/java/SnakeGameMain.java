@@ -10,6 +10,5 @@ import view.SnakeGameView;
 public class SnakeGameMain {
     public static void main(String[] args) {
         SnakeGameStartWindowView startView = new SnakeGameStartWindowView();
-        startView.setVisible(true);
     }
 }

@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 import gameUtils.DirectionEnum;
+import gameUtils.Posn;
 
 class SnakeGameModelTest {
     int rowNum = 4;

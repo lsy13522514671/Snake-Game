@@ -77,8 +77,8 @@ public class SnakeGameController implements ISnakeGameController {
     }
 
     @Override
-    public void start(int frequency) {
-        gameTimer.run(frequency);
+    public void start() {
+        gameTimer.run(period);
     }
 
     @Override
@@ -89,6 +89,6 @@ public class SnakeGameController implements ISnakeGameController {
     @Override
     public void recover() {
         this.gameTimer = new SnakeGameTimer(model, view);
-        start(period);
+        start();
     }
 }

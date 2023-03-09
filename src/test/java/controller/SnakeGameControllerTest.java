@@ -27,7 +27,7 @@ public class SnakeGameControllerTest {
      */
     private void waitInMS(int duration) {
         long start = System.currentTimeMillis();
-        while (System.currentTimeMillis() - start <= duration) {
+        while (System.currentTimeMillis() - start < duration) {
             continue;
         }
     }
@@ -39,7 +39,7 @@ public class SnakeGameControllerTest {
      * @param duration duration of time that the controller runs
      */
     private void runControl(int duration) {
-        control.start(control.getPeriod());
+        control.start();
         waitInMS(duration);
         control.pause();
     }
@@ -181,7 +181,7 @@ public class SnakeGameControllerTest {
                 "The view painted the current game screen.";
 
         // controller runs for two seconds so that the snake moves two steps
-        control.start(1000);
+        control.start();
         waitInMS(2000);
 
         // controller turns the snake direction to left

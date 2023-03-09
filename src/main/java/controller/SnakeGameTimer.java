@@ -23,7 +23,7 @@ class SnakeGameTimer {
             @Override
             public void run() {
                 model.moveSnake();
-                view.paint();
+                view.paintGameFrame();
             }
         };
     }

@@ -8,7 +8,7 @@ public interface ISnakeGameView {
      * This method displays the current game screen. It gets all information
      * directly from model.
      */
-    public void paint();
+    public void paintGameFrame();
 
     /**
      * This method is called while the game is over. It displays the game over
