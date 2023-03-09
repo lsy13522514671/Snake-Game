@@ -30,16 +30,23 @@ public class SnakeGameBoard extends JPanel {
 
     private void drawBoard() {
         GridBagConstraints gbc = new GridBagConstraints();
+        LinkedList<Posn> snake = model.getSnakePosition();
 
-        for(int i=0; i<colNum; i++) {
-            for(int j=0; j<rowNum; j++) {
+        for (int i = 0; i < colNum; i++) {
+            for (int j = 0; j < rowNum; j++) {
+                Posn curPos = new Posn(i, j);
                 gbc.gridx = i;
                 gbc.gridy = j;
-                add(new SnakeGameCell(Color.white), gbc);
+
+                if (snake.contains(curPos)) {
+                    add(new SnakeGameCell(Color.blue), gbc);
+                } else if (model.getApplePos().equals(new Posn(i, j))) {
+                    add(new SnakeGameCell(Color.red), gbc);
+                } else {
+                    add(new SnakeGameCell(Color.white), gbc);
+                }
             }
         }
-
-        LinkedList<Posn> snake = model.getSnakePosition();
 
     }
 }
