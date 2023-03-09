@@ -74,19 +74,15 @@ class SnakeGameModelTest {
         // snake does not turn left, because it's an invalid direction at the moment
         model.setSnakeDirection(DirectionEnum.LEFT);
 
-        // snake moves down
-        model.setSnakeDirection(DirectionEnum.DOWN);
+        // snake moves up
+        model.setSnakeDirection(DirectionEnum.UP);
         model.moveSnake();
 
-        // snake moves down again
+        // snake moves up again
         model.moveSnake();
 
         // snake moves left
         model.setSnakeDirection(DirectionEnum.LEFT);
-        model.moveSnake();
-
-        // snake moves up
-        model.setSnakeDirection(DirectionEnum.UP);
         model.moveSnake();
 
         positions = model.getSnakePosition();
@@ -95,7 +91,7 @@ class SnakeGameModelTest {
         // the snake length does not change as it eats nothing
         assertEquals(initLength, curLength);
 
-        int[][] targetPos = { { 2, 1 }, { 2, 0 } };
+        int[][] targetPos = { { 2, 0 }, { 3, 0 } };
 
         for (int i = 0; i < targetPos.length; i++) {
             assertEquals(positions.get(i).getXPos(), targetPos[i][0]);
@@ -137,7 +133,7 @@ class SnakeGameModelTest {
         curLength = positions.size();
         assertEquals(initLength + 1, curLength);
 
-        int[][] targetPos = { { 2, 3 }, { 2, 2 }, { 2, 1 } };
+        int[][] targetPos = { { 2, 1 }, { 2, 2 }, { 2, 3 } };
 
         for (int i = 0; i < targetPos.length; i++) {
             assertEquals(positions.get(i).getXPos(), targetPos[i][0]);
@@ -155,6 +151,9 @@ class SnakeGameModelTest {
         model.setSnakeDirection(DirectionEnum.UP);
         model.moveSnake();
 
+        // snake moves up again
+        model.moveSnake();
+
         // snake moves up again and crash on the wall
         model.moveSnake();
 
@@ -170,9 +169,6 @@ class SnakeGameModelTest {
         model.setSnakeDirection(DirectionEnum.DOWN);
         model.moveSnake();
 
-        // snake moves down
-        model.moveSnake();
-
         // snake moves down again and crash on the wall
         model.moveSnake();
 
@@ -181,9 +177,6 @@ class SnakeGameModelTest {
 
     @Test
     void testSnakeCrashLeftWall() {
-        // snake moves right
-        model.moveSnake();
-
         // snake moves right
         model.moveSnake();
 
@@ -219,8 +212,8 @@ class SnakeGameModelTest {
 
     @Test
     void testSnakeCrashBody() {
-        // snake moves up
-        model.setSnakeDirection(DirectionEnum.UP);
+        // snake moves down
+        model.setSnakeDirection(DirectionEnum.DOWN);
         model.moveSnake();
 
         // snake moves left
@@ -230,11 +223,11 @@ class SnakeGameModelTest {
         // snake moves left again
         model.moveSnake();
 
-        // snake moves down
-        model.setSnakeDirection(DirectionEnum.DOWN);
+        // snake moves up
+        model.setSnakeDirection(DirectionEnum.UP);
         model.moveSnake();
 
-        // snake moves down again
+        // snake moves up again
         model.moveSnake();
 
         // snake moves right
@@ -244,16 +237,16 @@ class SnakeGameModelTest {
         // snake moves right again
         model.moveSnake();
 
-        // snake moves up
-        model.setSnakeDirection(DirectionEnum.UP);
+        // snake moves down
+        model.setSnakeDirection(DirectionEnum.DOWN);
         model.moveSnake();
 
         // snake moves left
         model.setSnakeDirection(DirectionEnum.LEFT);
         model.moveSnake();
 
-        // snake moves down and crash on its body
-        model.setSnakeDirection(DirectionEnum.DOWN);
+        // snake moves up and crash on its body
+        model.setSnakeDirection(DirectionEnum.UP);
         model.moveSnake();
 
         assertTrue(model.isGameOver());

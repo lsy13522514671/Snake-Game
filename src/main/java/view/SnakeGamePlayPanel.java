@@ -28,8 +28,7 @@ public class SnakeGamePlayPanel extends JPanel{
         
         add(buttonPanel, BorderLayout.NORTH);
 
-        SnakeGameBoard board = new SnakeGameBoard();
-        board.setPreferredSize(new Dimension(400, 400));
+        SnakeGameBoard board = new SnakeGameBoard(model);
 
         add(board, BorderLayout.CENTER);
         // board.setPreferredSize(new Dimension(board.getHeight(), board.getWidth()));

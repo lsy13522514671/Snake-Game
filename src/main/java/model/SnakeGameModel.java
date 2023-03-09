@@ -164,7 +164,7 @@ public class SnakeGameModel implements ISnakeGameModel {
             map[pos.getYPos()][pos.getXPos()] = 'S';
         }
 
-        for (int i = rowNum - 1; i >= 0; i--) {
+        for (int i = 0; i < rowNum; i++) {
             for (int j = 0; j < colNum; j++) {
                 System.out.print(map[i][j]);
                 if (j == colNum - 1) {

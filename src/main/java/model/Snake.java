@@ -37,10 +37,10 @@ class Snake {
     void move() {
         switch (direction) {
             case UP:
-                bodyPartPos.addFirst(new Posn(headPos.getXPos(), headPos.getYPos() + 1));
+                bodyPartPos.addFirst(new Posn(headPos.getXPos(), headPos.getYPos() - 1));
                 break;
             case DOWN:
-                bodyPartPos.addFirst(new Posn(headPos.getXPos(), headPos.getYPos() - 1));
+                bodyPartPos.addFirst(new Posn(headPos.getXPos(), headPos.getYPos() + 1));
                 break;
             case LEFT:
                 bodyPartPos.addFirst(new Posn(headPos.getXPos() - 1, headPos.getYPos()));
