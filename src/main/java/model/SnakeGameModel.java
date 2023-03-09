@@ -14,8 +14,8 @@ import gameUtils.Posn;
  * game logic. It stores all information about snake game, including the
  * row number, column number, snake, last snake body part positions, apple
  * position, model observers, and a random object that is used to generate
- * random integers. Note that all positions are represented in the first
- * quadrant starting from (0,0) at the bottom left corner.
+ * random integers. Note that positioning start from (0,0) at the top left
+ * corner.
  */
 public class SnakeGameModel implements ISnakeGameModel {
     private int rowNum; // row number of the game board
@@ -29,11 +29,11 @@ public class SnakeGameModel implements ISnakeGameModel {
 
     public SnakeGameModel(int rowNum, int colNum, Random rand) throws IllegalArgumentException {
         if (rowNum < 4) {
-            throw new IllegalArgumentException("Illegal row number: " + rowNum +"!");
+            throw new IllegalArgumentException("Illegal row number: " + rowNum + "!");
         }
 
         if (colNum < 4) {
-            throw new IllegalArgumentException("Illegal column number: " + colNum +"!");
+            throw new IllegalArgumentException("Illegal column number: " + colNum + "!");
         }
 
         // below code initializes the model
