@@ -17,7 +17,7 @@ The Snake Game is simple and traditional. Hence, it is good start to practice wi
 
 * Change directory to the root of this project
 * SnakeGameMain is the program entry point
-* If you are new to gradle, simply follow the instructions below:
+* If you are new to gradle, simply follow the instruction below. 
 If you are a Linux/Mac user, run 
 ```
 gradlew build
@@ -37,7 +37,7 @@ There is a bug for setting direction. Before each snake movement, the user is ab
 
 ### Game Board GUI
 
-There is a bug on GUI. The game board is unable to proportionally react to the window. If the row number and col number are set to large enough, the game board will zoom out and hard to see.
+There is a bug on GUI. The game board is unable to proportionally react to the window. If the row number and col number are set to large enough, the game board will zoom out and become hard to see.
 
 ## Author
 
