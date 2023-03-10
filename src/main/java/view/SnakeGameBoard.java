@@ -7,13 +7,8 @@ import javax.swing.JPanel;
 import gameUtils.Posn;
 import model.SnakeGameModel;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.util.LinkedList;
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
 
 public class SnakeGameBoard extends JPanel {
     private SnakeGameModel model;
@@ -28,9 +23,11 @@ public class SnakeGameBoard extends JPanel {
         drawBoard();
     }
 
-    private void drawBoard() {
+    void drawBoard() {
         GridBagConstraints gbc = new GridBagConstraints();
         LinkedList<Posn> snake = model.getSnakePosition();
+        LinkedList<Posn> lastSnakePos = model.getLastSnakePos();
+        Posn applePos = model.getApplePos();
 
         for (int i = 0; i < colNum; i++) {
             for (int j = 0; j < rowNum; j++) {
@@ -38,13 +35,27 @@ public class SnakeGameBoard extends JPanel {
                 gbc.gridx = i;
                 gbc.gridy = j;
 
-                if (snake.contains(curPos)) {
-                    add(new SnakeGameCell(Color.blue), gbc);
-                } else if (model.getApplePos().equals(new Posn(i, j))) {
+                // draws the apple
+                if(curPos.equals(applePos)) {
                     add(new SnakeGameCell(Color.red), gbc);
-                } else {
-                    add(new SnakeGameCell(Color.white), gbc);
+                    continue;
                 }
+                
+                // draws the snake
+                if(!model.isGameOver()) {
+                    if (snake.contains(curPos)) {
+                        add(new SnakeGameCell(Color.blue), gbc);
+                        continue;
+                    }
+                } else {
+                    if (lastSnakePos.contains(curPos)) {
+                        add(new SnakeGameCell(Color.blue), gbc);
+                        continue;
+                    }
+                }
+
+                // draws the normal cell
+                add(new SnakeGameCell(Color.white), gbc);
             }
         }
 

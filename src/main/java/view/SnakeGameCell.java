@@ -17,6 +17,6 @@ class SnakeGameCell extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(50, 50);
+        return new Dimension(30, 30);
     }
 }

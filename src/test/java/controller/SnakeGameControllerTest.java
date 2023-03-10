@@ -201,37 +201,37 @@ public class SnakeGameControllerTest {
         assertEquals(targetLog, model.getLog());
     }
 
-    @Test
-    public void testSnakeGameControllerRecover() {
-        String targetLog = "The model appended the observer of type class controller.SnakeGameController.\n" +
-                "The model verified that the game was not over. The game continued.\n" +
-                "The model moved the snake one step.\n" +
-                "The view painted the current game screen.\n" +
-                "The model verified that the game was not over. The game continued.\n" +
-                "The model moved the snake one step.\n" +
-                "The view painted the current game screen.\n" +
-                "The model verified that the game was not over. The game continued.\n" +
-                "The model moved the snake one step.\n" +
-                "The view painted the current game screen.";
+    // @Test
+    // public void testSnakeGameControllerRecover() {
+    //     String targetLog = "The model appended the observer of type class controller.SnakeGameController.\n" +
+    //             "The model verified that the game was not over. The game continued.\n" +
+    //             "The model moved the snake one step.\n" +
+    //             "The view painted the current game screen.\n" +
+    //             "The model verified that the game was not over. The game continued.\n" +
+    //             "The model moved the snake one step.\n" +
+    //             "The view painted the current game screen.\n" +
+    //             "The model verified that the game was not over. The game continued.\n" +
+    //             "The model moved the snake one step.\n" +
+    //             "The view painted the current game screen.";
 
-        // controller runs for two seconds so that the snake moves two steps
-        runControl(2000);
+    //     // controller runs for two seconds so that the snake moves two steps
+    //     runControl(2000);
 
-        int initPeriod = control.getPeriod();
+    //     int initPeriod = control.getPeriod();
 
-        // controller recovers the timer
-        control.recover();
+    //     // controller recovers the timer
+    //     control.recover();
 
-        // the timer frequency does not change
-        int curPeriod = control.getPeriod();
-        assertEquals(initPeriod, curPeriod);
+    //     // the timer frequency does not change
+    //     int curPeriod = control.getPeriod();
+    //     assertEquals(initPeriod, curPeriod);
 
-        // controller runs for a second so that the snake moves one step
-        waitInMS(1000);
-        control.pause();
+    //     // controller runs for a second so that the snake moves one step
+    //     waitInMS(1000);
+    //     control.pause();
 
-        assertEquals(targetLog, model.getLog());
-    }
+    //     assertEquals(targetLog, model.getLog());
+    // }
 
     @Test
     public void testSnakeGameControllerGameOverUpdate() {

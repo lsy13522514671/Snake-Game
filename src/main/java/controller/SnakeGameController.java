@@ -48,7 +48,6 @@ public class SnakeGameController implements ISnakeGameController {
      */
     public void setView(ISnakeGameView view) {
         this.view = view;
-        this.gameTimer = new SnakeGameTimer(model, view);
     }
 
     /**
@@ -68,7 +67,6 @@ public class SnakeGameController implements ISnakeGameController {
     @Override
     public void gameOverUpdate() {
         pause();
-        view.paintEndFrame();
     }
 
     @Override
@@ -78,17 +76,12 @@ public class SnakeGameController implements ISnakeGameController {
 
     @Override
     public void start() {
+        gameTimer = new SnakeGameTimer(model, view);
         gameTimer.run(period);
     }
 
     @Override
     public void pause() {
         gameTimer.destroy();
-    }
-
-    @Override
-    public void recover() {
-        this.gameTimer = new SnakeGameTimer(model, view);
-        start();
     }
 }

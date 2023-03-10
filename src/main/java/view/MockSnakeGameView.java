@@ -20,7 +20,7 @@ public class MockSnakeGameView implements ISnakeGameView {
     }
 
     @Override
-    public void paintEndFrame() {
+    public void gameOverUpdate() {
         log.append("The view painted the game over screen.\n");
     }
 }

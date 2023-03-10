@@ -133,9 +133,7 @@ class SnakeGameStartPanel extends JPanel implements ChangeListener {
                 cleanInputContent();
 
                 SnakeGameController control = new SnakeGameController(model, sliderContent.getValue());
-                SnakeGameView view = new SnakeGameView(parent, model);
-                control.setView(view);
-                view.setControl(control);
+                new SnakeGameView(parent, model, control);
             }});
 
         buttonPanel.add(startButton);

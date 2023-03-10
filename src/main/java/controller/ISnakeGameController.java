@@ -28,10 +28,4 @@ public interface ISnakeGameController extends ISnakeGameObserver {
      * snake.
      */
     public void pause();
-
-    /**
-     * This method recovers the game timer. The controller uses this method to
-     * continue the snake game from previous status.
-     */
-    public void recover();
 }

@@ -203,6 +203,10 @@ public class SnakeGameModel implements ISnakeGameModel {
         return snake.getBodyPartPos();
     }
 
+    public LinkedList<Posn> getLastSnakePos() {
+        return lastSnakePos;
+    }
+
     /**
      * This method gets the apple position.
      * 
