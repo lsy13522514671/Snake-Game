@@ -6,8 +6,6 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.Dimension;
 
-import gameUtils.Posn;
-
 class SnakeGameCell extends JPanel {
     SnakeGameCell(Color backgroundColor) {
         setBackground(backgroundColor);
@@ -17,6 +15,6 @@ class SnakeGameCell extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(30, 30);
+        return new Dimension(40, 40);
     }
 }

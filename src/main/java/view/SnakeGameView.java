@@ -71,22 +71,18 @@ public class SnakeGameView extends JDialog implements ISnakeGameView{
                 case KeyEvent.VK_UP:
                     control.setSnakeDirection(DirectionEnum.UP);
                     logContent.setText("up pressed");
-                    System.out.println("up pressed");
                     break;
                 case KeyEvent.VK_DOWN:
                     control.setSnakeDirection(DirectionEnum.DOWN);
                     logContent.setText("down pressed");
-                    System.out.println("down pressed");
                     break;
                 case KeyEvent.VK_LEFT:
                     control.setSnakeDirection(DirectionEnum.LEFT);
                     logContent.setText("left pressed");
-                    System.out.println("left pressed");
                     break;
                 case KeyEvent.VK_RIGHT:
                     control.setSnakeDirection(DirectionEnum.RIGHT);
                     logContent.setText("right pressed");
-                    System.out.println("right pressed");
                     break;
             }
         }
