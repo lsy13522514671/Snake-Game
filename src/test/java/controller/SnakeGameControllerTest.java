@@ -48,7 +48,7 @@ public class SnakeGameControllerTest {
     void setup() {
         // this method initializes prerequsite objects for each test
         model = new MockSnakeGameModel(log);
-        view = new MockSnakeGameView(log);
+        view = new MockSnakeGameView(log, model);
         control = new SnakeGameController(model);
         view.setControl(control);
         control.setView(view);
@@ -57,13 +57,15 @@ public class SnakeGameControllerTest {
     @Test
     public void testSnakeGameControllerInit() {
         // the controller is added as a observer of model
-        String targetLog = "The model appended the observer of type class controller.SnakeGameController.";
+        String targetLog = "The model appended the observer of type class view.MockSnakeGameView.\n"
+                + "The model appended the observer of type class controller.SnakeGameController.";
         assertEquals(targetLog, model.getLog());
     }
 
     @Test
     public void testSnakeGameControllerSetSnakeDirectionUp() {
-        String targetLog = "The model appended the observer of type class controller.SnakeGameController.\n" +
+        String targetLog = "The model appended the observer of type class view.MockSnakeGameView.\n"
+                + "The model appended the observer of type class controller.SnakeGameController.\n" +
                 "The model set the snake direction to UP.";
 
         // the snake direction is turned up
@@ -73,7 +75,8 @@ public class SnakeGameControllerTest {
 
     @Test
     public void testSnakeGameControllerSetSnakeDirectionDown() {
-        String targetLog = "The model appended the observer of type class controller.SnakeGameController.\n" +
+        String targetLog = "The model appended the observer of type class view.MockSnakeGameView.\n"
+                + "The model appended the observer of type class controller.SnakeGameController.\n" +
                 "The model set the snake direction to DOWN.";
 
         // the snake direction is turned down
@@ -83,7 +86,8 @@ public class SnakeGameControllerTest {
 
     @Test
     public void testSnakeGameControllerSetSnakeDirectionLeft() {
-        String targetLog = "The model appended the observer of type class controller.SnakeGameController.\n" +
+        String targetLog = "The model appended the observer of type class view.MockSnakeGameView.\n"
+                + "The model appended the observer of type class controller.SnakeGameController.\n" +
                 "The model set the snake direction to LEFT.";
 
         // the snake direction is turned left
@@ -93,7 +97,8 @@ public class SnakeGameControllerTest {
 
     @Test
     public void testSnakeGameControllerSetSnakeDirectionRight() {
-        String targetLog = "The model appended the observer of type class controller.SnakeGameController.\n" +
+        String targetLog = "The model appended the observer of type class view.MockSnakeGameView.\n"
+                + "The model appended the observer of type class controller.SnakeGameController.\n" +
                 "The model set the snake direction to RIGHT.";
 
         // the snake direction is turned right
@@ -103,7 +108,8 @@ public class SnakeGameControllerTest {
 
     @Test
     public void testSnakeGameControllerSetSnakeDirectionMix() {
-        String targetLog = "The model appended the observer of type class controller.SnakeGameController.\n" +
+        String targetLog = "The model appended the observer of type class view.MockSnakeGameView.\n"
+                + "The model appended the observer of type class controller.SnakeGameController.\n" +
                 "The model set the snake direction to UP.\n" +
                 "The model set the snake direction to DOWN.\n" +
                 "The model set the snake direction to LEFT.\n" +
@@ -122,7 +128,8 @@ public class SnakeGameControllerTest {
 
     @Test
     public void testSnakeGameControllerStartAndPauseForThreeSeconds() {
-        String targetLog = "The model appended the observer of type class controller.SnakeGameController.\n" +
+        String targetLog = "The model appended the observer of type class view.MockSnakeGameView.\n"
+                + "The model appended the observer of type class controller.SnakeGameController.\n" +
                 "The model verified that the game was not over. The game continued.\n" +
                 "The model moved the snake one step.\n" +
                 "The view painted the current game screen.\n" +
@@ -140,7 +147,8 @@ public class SnakeGameControllerTest {
 
     @Test
     public void testSnakeGameControllerStartAndPauseForFiveSeconds() {
-        String targetLog = "The model appended the observer of type class controller.SnakeGameController.\n" +
+        String targetLog = "The model appended the observer of type class view.MockSnakeGameView.\n"
+                + "The model appended the observer of type class controller.SnakeGameController.\n" +
                 "The model verified that the game was not over. The game continued.\n" +
                 "The model moved the snake one step.\n" +
                 "The view painted the current game screen.\n" +
@@ -164,7 +172,8 @@ public class SnakeGameControllerTest {
 
     @Test
     public void testSnakeGameControllerSetDirectionInMove() {
-        String targetLog = "The model appended the observer of type class controller.SnakeGameController.\n" +
+        String targetLog = "The model appended the observer of type class view.MockSnakeGameView.\n"
+                + "The model appended the observer of type class controller.SnakeGameController.\n" +
                 "The model verified that the game was not over. The game continued.\n" +
                 "The model moved the snake one step.\n" +
                 "The view painted the current game screen.\n" +
@@ -201,41 +210,10 @@ public class SnakeGameControllerTest {
         assertEquals(targetLog, model.getLog());
     }
 
-    // @Test
-    // public void testSnakeGameControllerRecover() {
-    //     String targetLog = "The model appended the observer of type class controller.SnakeGameController.\n" +
-    //             "The model verified that the game was not over. The game continued.\n" +
-    //             "The model moved the snake one step.\n" +
-    //             "The view painted the current game screen.\n" +
-    //             "The model verified that the game was not over. The game continued.\n" +
-    //             "The model moved the snake one step.\n" +
-    //             "The view painted the current game screen.\n" +
-    //             "The model verified that the game was not over. The game continued.\n" +
-    //             "The model moved the snake one step.\n" +
-    //             "The view painted the current game screen.";
-
-    //     // controller runs for two seconds so that the snake moves two steps
-    //     runControl(2000);
-
-    //     int initPeriod = control.getPeriod();
-
-    //     // controller recovers the timer
-    //     control.recover();
-
-    //     // the timer frequency does not change
-    //     int curPeriod = control.getPeriod();
-    //     assertEquals(initPeriod, curPeriod);
-
-    //     // controller runs for a second so that the snake moves one step
-    //     waitInMS(1000);
-    //     control.pause();
-
-    //     assertEquals(targetLog, model.getLog());
-    // }
-
     @Test
     public void testSnakeGameControllerGameOverUpdate() {
-        String targetLog = "The model appended the observer of type class controller.SnakeGameController.\n" +
+        String targetLog = "The model appended the observer of type class view.MockSnakeGameView.\n"
+                + "The model appended the observer of type class controller.SnakeGameController.\n" +
                 "The model verified that the game was not over. The game continued.\n" +
                 "The model moved the snake one step.\n" +
                 "The view painted the current game screen.\n" +

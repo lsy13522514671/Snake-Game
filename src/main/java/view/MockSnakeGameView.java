@@ -1,13 +1,15 @@
 package view;
 
 import controller.ISnakeGameController;
+import model.ISnakeGameModel;
 
 public class MockSnakeGameView implements ISnakeGameView {
     public StringBuilder log;
     public ISnakeGameController control;
 
-    public MockSnakeGameView(StringBuilder log) {
+    public MockSnakeGameView(StringBuilder log, ISnakeGameModel model) {
         this.log = log;
+        model.attach(this);
     }
     
     public void setControl(ISnakeGameController control) {
