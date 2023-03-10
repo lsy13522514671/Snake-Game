@@ -29,7 +29,7 @@ gradlew.bat build
 
 ## Remaining Issue
 
-I will comback to solve these issues if I have time.
+I will come back to solve these issues if I have time.
 
 ### Controller Setting Direction
 
