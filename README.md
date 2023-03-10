@@ -4,7 +4,7 @@ This Java project implements a Snake Game. It is a practice of the object-orient
 
 ## Description
 
-The Snake Game is simple and traditional. Hence, it is good start to practice with Java programming skill. The game is implemented using MVC pattern and its GUI is implemented in Java Swing. Gradle is used as a build tool for this project.
+The Snake Game is simple and traditional. Hence, it is good subject to practice with Java programming skill. The game is implemented using MVC pattern and its GUI is implemented in Java Swing. Gradle is used as a build tool for this project.
 
 ## Getting Started
 
