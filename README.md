@@ -30,9 +30,9 @@ gradlew.bat build
 
 I will come back to solve these issues if I have time.
 
-### Controller Setting Direction
+### Setting Snake Direction
 
-There is a bug for setting direction. Before each snake movement, the user is able to set the snake direction multiple times irrationally. For example, while the snake's direction is toward right, the user is able to set the snake to left by immediately setting the snake direction up first and then set the snake direction left. This bug bypasses the model's movement validation and makes the snake turn to invalid direction.
+There is a bug for setting snake direction. Before each snake movement, the user is able to set an invalid snake direction with irrational behaviour. For example, before the snake moves toward right, the user is able to immediately set the snake direction up first and in turn set the snake direction left. This bug bypasses the model's movement validation and makes the snake turn to invalid direction.
 
 ### Game Board GUI
 
