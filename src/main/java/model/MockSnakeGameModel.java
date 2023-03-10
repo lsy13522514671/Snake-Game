@@ -9,7 +9,6 @@ import gameUtils.ISnakeGameObserver;
  * This MockSnakeGameModel class mocks a real snake game model for the testing
  * purpose. It maintains a execution log, a boolean indicating whether the game
  * is over and its observers.
- * 
  */
 public class MockSnakeGameModel implements ISnakeGameModel {
     private StringBuilder log;

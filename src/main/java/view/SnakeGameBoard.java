@@ -10,6 +10,11 @@ import model.SnakeGameModel;
 import java.util.LinkedList;
 import java.awt.Color;
 
+/**
+ * This SnakeGameBoard class renders the game board. The controller uses the
+ * game timer to repaint the board in an user specified time. The game board
+ * is painted based on the model it maintains.
+ */
 public class SnakeGameBoard extends JPanel {
     private SnakeGameModel model;
     private int rowNum;
@@ -23,6 +28,10 @@ public class SnakeGameBoard extends JPanel {
         drawBoard();
     }
 
+    /**
+     * This method draws the game board step by step. It draws a cell based on what
+     * it is in the model. In other words, its a visual mapping from the game model.
+     */
     void drawBoard() {
         GridBagConstraints gbc = new GridBagConstraints();
         LinkedList<Posn> snake = model.getSnakePosition();
@@ -36,13 +45,13 @@ public class SnakeGameBoard extends JPanel {
                 gbc.gridy = j;
 
                 // draws the apple
-                if(curPos.equals(applePos)) {
+                if (curPos.equals(applePos)) {
                     add(new SnakeGameCell(Color.red), gbc);
                     continue;
                 }
-                
+
                 // draws the snake
-                if(!model.isGameOver()) {
+                if (!model.isGameOver()) {
                     if (snake.contains(curPos)) {
                         add(new SnakeGameCell(Color.blue), gbc);
                         continue;
