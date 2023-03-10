@@ -16,7 +16,6 @@ The Snake Game is simple and traditional. Hence, it is good start to practice wi
 ### Executing Program
 
 * Change directory to the root of this project
-* SnakeGameMain is the program entry point
 * If you are new to gradle, simply follow the instruction below. 
 If you are a Linux/Mac user, run 
 ```
